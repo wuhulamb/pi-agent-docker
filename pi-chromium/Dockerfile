@@ -43,7 +43,7 @@ ENV PATH="/home/node/.local/bin:${PATH}"
 ENV DISPLAY=:99
 
 RUN mkdir -p \
-    /home/node/chrome-profile \
+    /home/node/chromium-profile \
     /home/node/.vnc
 
 COPY --chown=node:node start.sh /usr/local/bin/start.sh

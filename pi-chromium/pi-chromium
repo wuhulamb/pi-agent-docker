@@ -4,9 +4,9 @@ PI_SKIP_VERSION_CHECK=1
 
 docker run --rm -it \
   -u $(id -u):$(id -g) \
-  -v "$HOME/.pi/pi-chrome/agent/":"/home/node/.pi/agent/" \
-  -v "$HOME/.pi/pi-chrome/agent-downloads/":"/home/node/Downloads/" \
-  -v "$HOME/.pi/pi-chrome/chrome-profile/":"/home/node/chrome-profile/" \
+  -v "$HOME/.pi/pi-chromium/agent/":"/home/node/.pi/agent/" \
+  -v "$HOME/.pi/pi-chromium/agent-downloads/":"/home/node/Downloads/" \
+  -v "$HOME/.pi/pi-chromium/chromium-profile/":"/home/node/chromium-profile/" \
   -v "$PWD":"/workspace" \
   -w /workspace \
   -e PI_SKIP_VERSION_CHECK="$PI_SKIP_VERSION_CHECK" \

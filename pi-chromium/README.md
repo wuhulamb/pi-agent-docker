@@ -34,7 +34,7 @@ docker build -t pi-chromium:latest pi-chromium/
 pi install npm:@narumitw/pi-chrome-devtools
 ```
 
-由于 `pi-chromium` 脚本将宿主机 `~/.pi/pi-chrome/agent/` 挂载为容器内的 `/home/node/.pi/agent/` ，扩展实际安装于**宿主机**。安装后即可通过 CDP（`9222`）控制容器内的 Chromium
+由于 `pi-chromium` 脚本将宿主机 `~/.pi/pi-chromium/agent/` 挂载为容器内的 `/home/node/.pi/agent/` ，扩展实际安装于**宿主机**。安装后即可通过 CDP（`9222`）控制容器内的 Chromium
 
 ## 访问浏览器
 

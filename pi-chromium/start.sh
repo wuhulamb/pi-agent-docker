@@ -3,7 +3,7 @@ set -e
 
 export DISPLAY=:99
 
-PROFILE=/home/node/chrome-profile
+PROFILE=/home/node/chromium-profile
 
 rm -f \
     "$PROFILE/SingletonLock" \
@@ -49,7 +49,7 @@ WEBSOCK_PID=$!
 echo "Starting Chromium..."
 
 chromium \
-    --user-data-dir=/home/node/chrome-profile \
+    --user-data-dir="$PROFILE" \
     --remote-debugging-address=127.0.0.1 \
     --remote-debugging-port=9222 \
     --window-size=1920,1080 \
