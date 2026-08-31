@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+PI_SKIP_VERSION_CHECK=1
+
+docker run --rm -it \
+  -u $(id -u):$(id -g) \
+  -v "$HOME/.pi/pi-base/agent/":"/home/node/.pi/agent/" \
+  -v "$PWD":"/workspace" \
+  -w /workspace \
+  -e PI_SKIP_VERSION_CHECK="$PI_SKIP_VERSION_CHECK" \
+  pi:latest
