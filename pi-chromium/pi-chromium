@@ -2,6 +2,11 @@
 
 PI_SKIP_VERSION_CHECK=1
 
+mkdir -p \
+    "$HOME/.pi/pi-chromium/agent" \
+    "$HOME/.pi/pi-chromium/agent-downloads" \
+    "$HOME/.pi/pi-chromium/chromium-profile"
+
 docker run --rm -it \
   -u $(id -u):$(id -g) \
   -v "$HOME/.pi/pi-chromium/agent/":"/home/node/.pi/agent/" \

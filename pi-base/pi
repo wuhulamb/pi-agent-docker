@@ -2,6 +2,9 @@
 
 PI_SKIP_VERSION_CHECK=1
 
+mkdir -p \
+    "$HOME/.pi/pi-base/agent"
+
 docker run --rm -it \
   -u $(id -u):$(id -g) \
   -v "$HOME/.pi/pi-base/agent/":"/home/node/.pi/agent/" \
