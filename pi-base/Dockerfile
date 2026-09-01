@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     strace \
     procps \
+    xxd \
     fd-find \
     ripgrep \
     fonts-liberation \
