@@ -8,6 +8,7 @@ mkdir -p \
 docker run --rm -it \
   -u $(id -u):$(id -g) \
   -v "$HOME/.pi/pi-base/agent/":"/home/node/.pi/agent/" \
+  -v "$HOME/Documents/programs/shadowsocks/config.json":"/etc/shadowsocks-libev/config.json" \
   -v "$PWD":"/workspace" \
   -w /workspace \
   -e PI_SKIP_VERSION_CHECK="$PI_SKIP_VERSION_CHECK" \

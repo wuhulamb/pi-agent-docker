@@ -24,3 +24,7 @@ docker build -t pi:latest pi-base/
 ```
 
 运行 `pi` 命令启动智能体
+
+## 网络代理
+
+Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。

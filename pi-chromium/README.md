@@ -36,6 +36,10 @@ pi install npm:@narumitw/pi-chrome-devtools
 
 由于 `pi-chromium` 脚本将宿主机 `~/.pi/pi-chromium/agent/` 挂载为容器内的 `/home/node/.pi/agent/` ，扩展实际安装于**宿主机**。安装后即可通过 CDP（`9222`）控制容器内的 Chromium
 
+## 网络代理
+
+Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。
+
 ## 访问浏览器
 
 启动后在宿主机浏览器打开：
