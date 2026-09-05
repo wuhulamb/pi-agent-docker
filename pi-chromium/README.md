@@ -6,13 +6,16 @@
 
 | 文件 | 说明 |
 | --- | --- |
-| `Dockerfile` | 镜像构建定义（基础工具 + Chromium + 远程桌面 + pi-coding-agent） |
+| `Dockerfile` | 镜像构建定义（基于 `pi:latest`，叠加 Chromium + 远程桌面） |
 | `start.sh` | 容器入口脚本：依次启动 Xvfb、x11vnc、noVNC、Chromium |
 | `pi-chromium` | 宿主机的启动脚本：以当前用户身份运行容器并挂载持久化目录，进入容器后需再执行 `pi` |
 
 ## 构建镜像
 
+`pi-chromium` 基于 `pi:latest` 构建（继承基础工具、中文字体、pi-coding-agent 与网络代理），请先构建基础镜像：
+
 ```bash
+docker build -t pi:latest pi-base/
 docker build -t pi-chromium:latest pi-chromium/
 ```
 
@@ -38,7 +41,7 @@ pi install npm:@narumitw/pi-chrome-devtools
 
 ## 网络代理
 
-Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。
+`shadowsocks-libev` 继承自基础镜像 `pi:latest`。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。
 
 ## 访问浏览器
 

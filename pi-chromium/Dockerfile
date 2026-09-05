@@ -1,37 +1,11 @@
-FROM node:24-bookworm-slim
+# 基于 pi-base 镜像构建，仅叠加 Chromium 浏览器栈相关组件。
+# 构建前需先构建基础镜像: docker build -t pi:latest pi-base/
+FROM pi:latest
 
-WORKDIR /workspace
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN cat > /etc/apt/sources.list.d/debian.sources <<'EOF'
-Types: deb
-URIs: http://mirrors.ustc.edu.cn/debian
-Suites: bookworm bookworm-updates
-Components: main
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-
-Types: deb
-URIs: http://mirrors.ustc.edu.cn/debian-security
-Suites: bookworm-security
-Components: main
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-EOF
+# 基础镜像末尾切换到了 node 用户，安装系统包需先切回 root
+USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    bash \
-    ca-certificates \
-    sudo \
-    curl \
-    python3 \
-    tzdata \
-    git \
-    build-essential \
-    strace \
-    procps \
-    xxd \
-    fd-find \
-    ripgrep \
     chromium \
     chromium-sandbox \
     xvfb \
@@ -40,22 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     websockify \
     xauth \
     dbus-x11 \
-    fonts-liberation \
-    fonts-noto-color-emoji \
-    fonts-noto-cjk \
-    shadowsocks-libev \
     && \
-    ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    npm install -g --ignore-scripts @earendil-works/pi-coding-agent@0.84.2 && \
-    echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node && \
-    chmod 440 /etc/sudoers.d/node && \
     rm -rf /var/lib/apt/lists/*
 
 USER node
-
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-ENV PATH="/home/node/.local/bin:${PATH}"
 
 ENV DISPLAY=:99
 

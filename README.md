@@ -10,7 +10,7 @@
 ## 快速开始
 
 ```bash
-# 构建镜像
+# 构建镜像（pi-chromium 基于 pi:latest 构建，需先构建基础镜像）
 docker build -t pi:latest pi-base/
 docker build -t pi-chromium:latest pi-chromium/
 
