@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     strace \
     procps \
     xxd \
+    file \
     fd-find \
     ripgrep \
     fonts-liberation \
