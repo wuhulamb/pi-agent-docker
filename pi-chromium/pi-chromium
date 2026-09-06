@@ -7,10 +7,25 @@ mkdir -p \
     "$HOME/.pi/pi-chromium/agent-downloads" \
     "$HOME/.pi/pi-chromium/chromium-profile"
 
+GITCONFIG_MOUNT=()
+if [ -f "$HOME/.pi/.gitconfig" ]; then
+    GITCONFIG_MOUNT=(-v "$HOME/.pi/.gitconfig":"/home/node/.gitconfig")
+else
+    echo "提示: 未找到 $HOME/.pi/.gitconfig，跳过 git 全局配置挂载" >&2
+fi
+
+SHADOWSOCKS_MOUNT=()
+if [ -f "$HOME/Documents/programs/shadowsocks/config.json" ]; then
+    SHADOWSOCKS_MOUNT=(-v "$HOME/Documents/programs/shadowsocks/config.json":"/etc/shadowsocks-libev/config.json")
+else
+    echo "提示: 未找到 $HOME/Documents/programs/shadowsocks/config.json，跳过网络代理配置挂载" >&2
+fi
+
 docker run --rm -it \
   -u $(id -u):$(id -g) \
   -v "$HOME/.pi/pi-chromium/agent/":"/home/node/.pi/agent/" \
-  -v "$HOME/Documents/programs/shadowsocks/config.json":"/etc/shadowsocks-libev/config.json" \
+  "${SHADOWSOCKS_MOUNT[@]}" \
+  "${GITCONFIG_MOUNT[@]}" \
   -v "$HOME/.pi/pi-chromium/agent-downloads/":"/home/node/Downloads/" \
   -v "$HOME/.pi/pi-chromium/chromium-profile/":"/home/node/chromium-profile/" \
   -v "$PWD":"/workspace" \

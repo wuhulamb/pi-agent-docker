@@ -41,7 +41,7 @@ pi install npm:@narumitw/pi-chrome-devtools
 
 ## 网络代理
 
-`shadowsocks-libev` 继承自基础镜像 `pi:latest`。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。
+`shadowsocks-libev` 继承自基础镜像 `pi:latest`。若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内；文件缺失时跳过挂载。
 
 ## 访问浏览器
 
@@ -49,3 +49,7 @@ pi install npm:@narumitw/pi-chrome-devtools
 
 - **noVNC 界面**：<http://127.0.0.1:6080/vnc.html>
 - **CDP 端点**：`127.0.0.1:9222`（默认只监听容器内 loopback，用于工具驱动）
+
+## Git 配置
+
+若宿主机存在 `~/.pi/.gitconfig`，启动时自动挂载为容器内的 `/home/node/.gitconfig`；文件缺失时跳过挂载。需要启用时，将 `~/.gitconfig` 复制到 `~/.pi/.gitconfig` 即可。

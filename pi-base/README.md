@@ -27,4 +27,8 @@ docker build -t pi:latest pi-base/
 
 ## 网络代理
 
-Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。配置文件位于宿主机 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内。
+Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内；文件缺失时跳过挂载。
+
+## Git 配置
+
+若宿主机存在 `~/.pi/.gitconfig`，启动时自动挂载为容器内的 `/home/node/.gitconfig`；文件缺失时跳过挂载。需要启用时，将 `~/.gitconfig` 复制到 `~/.pi/.gitconfig` 即可。
