@@ -5,7 +5,7 @@
 | 镜像 | 目录 | 说明 |
 | --- | --- | --- |
 | `pi:latest` | [pi-base/](pi-base/README.md) | 基础镜像：内置常用开发/调试工具、中文字体与 pi-coding-agent |
-| `pi-chromium:latest` | [pi-chromium/](pi-chromium/README.md) | 浏览器增强镜像：在基础镜像上增加 Chromium、Xvfb、noVNC，支持浏览器自动化 |
+| `pi-chromium:latest` | [pi-chromium/](pi-chromium/README.md) | 浏览器增强镜像：在基础镜像上增加 Chrome for Testing、Xvfb、noVNC，支持浏览器自动化 |
 
 ## 快速开始
 
@@ -16,7 +16,7 @@ docker build -t pi-chromium:latest pi-chromium/
 
 # 使用
 ./pi-base/pi                # 基础版
-./pi-chromium/pi-chromium   # 浏览器版（需使用pi安装 pi-chrome-devtools 扩展）
+./pi-chromium/pi-chromium   # 浏览器版（内置 Chrome for Testing，通过 Chrome DevTools MCP 驱动）
 ```
 
 ## 文档

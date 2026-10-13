@@ -3,9 +3,7 @@
 PI_SKIP_VERSION_CHECK=1
 
 mkdir -p \
-    "$HOME/.pi/pi-chromium/agent" \
-    "$HOME/.pi/pi-chromium/agent-downloads" \
-    "$HOME/.pi/pi-chromium/chromium-profile"
+    "$HOME/.pi/pi-chromium/agent"
 
 GITCONFIG_MOUNT=()
 if [ -f "$HOME/.pi/.gitconfig" ]; then
@@ -26,8 +24,6 @@ docker run --rm -it \
   -v "$HOME/.pi/pi-chromium/agent/":"/home/node/.pi/agent/" \
   "${SHADOWSOCKS_MOUNT[@]}" \
   "${GITCONFIG_MOUNT[@]}" \
-  -v "$HOME/.pi/pi-chromium/agent-downloads/":"/home/node/Downloads/" \
-  -v "$HOME/.pi/pi-chromium/chromium-profile/":"/home/node/chromium-profile/" \
   -v "$PWD":"/workspace" \
   -w /workspace \
   -e PI_SKIP_VERSION_CHECK="$PI_SKIP_VERSION_CHECK" \

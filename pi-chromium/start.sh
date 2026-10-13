@@ -3,7 +3,7 @@ set -e
 
 export DISPLAY=:99
 
-PROFILE=/home/node/chromium-profile
+PROFILE=/home/node/chrome-profile
 
 rm -f \
     "$PROFILE/SingletonLock" \
@@ -46,16 +46,18 @@ websockify \
     > /tmp/novnc.log 2>&1 &
 WEBSOCK_PID=$!
 
-echo "Starting Chromium..."
+echo "Starting Chrome for Testing..."
 
-chromium \
+/opt/chrome-for-testing/chrome \
     --user-data-dir="$PROFILE" \
     --remote-debugging-address=127.0.0.1 \
     --remote-debugging-port=9222 \
     --window-size=1920,1080 \
     --disable-gpu \
+    --no-first-run \
+    --no-default-browser-check \
     about:blank \
-    > /tmp/chromium.log 2>&1 &
+    > /tmp/chrome.log 2>&1 &
 CHROME_PID=$!
 
 sleep 2
