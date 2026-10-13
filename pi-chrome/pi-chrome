@@ -3,7 +3,7 @@
 PI_SKIP_VERSION_CHECK=1
 
 mkdir -p \
-    "$HOME/.pi/pi-chromium/agent"
+    "$HOME/.pi/pi-chrome/agent"
 
 GITCONFIG_MOUNT=()
 if [ -f "$HOME/.pi/.gitconfig" ]; then
@@ -21,7 +21,7 @@ fi
 
 docker run --rm -it \
   -u $(id -u):$(id -g) \
-  -v "$HOME/.pi/pi-chromium/agent/":"/home/node/.pi/agent/" \
+  -v "$HOME/.pi/pi-chrome/agent/":"/home/node/.pi/agent/" \
   "${SHADOWSOCKS_MOUNT[@]}" \
   "${GITCONFIG_MOUNT[@]}" \
   -v "$PWD":"/workspace" \
@@ -30,4 +30,4 @@ docker run --rm -it \
   -p 127.0.0.1:6080:6080 \
   --shm-size=2g \
   --security-opt seccomp=unconfined \
-  pi-chromium:latest
+  pi-chrome:latest

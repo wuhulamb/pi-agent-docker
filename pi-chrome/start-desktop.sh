@@ -1,10 +1,9 @@
 #!/bin/bash
+# 启动 Chrome 桌面栈：Xvfb + x11vnc + noVNC + Chrome for Testing。
+# 作为 /etc/pi/startup.d/20-desktop.sh 钩子，由统一入口执行，启动后即返回。
 set -e
 
 export DISPLAY=:99
-
-echo "Starting shadowsocks..."
-/usr/local/bin/start-shadowsocks.sh || true
 
 PROFILE=/home/node/chrome-profile
 
@@ -13,7 +12,7 @@ rm -f \
     "$PROFILE/SingletonCookie" \
     "$PROFILE/SingletonSocket"
 
-echo "Starting Xvfb..."
+echo "starting Xvfb..."
 
 Xvfb :99 \
     -screen 0 1920x1080x24 \
@@ -22,11 +21,10 @@ Xvfb :99 \
     +render \
     -noreset \
     > /tmp/xvfb.log 2>&1 &
-XVFB_PID=$!
 
 sleep 1
 
-echo "Starting x11vnc..."
+echo "starting x11vnc..."
 
 x11vnc \
     -display :99 \
@@ -36,20 +34,18 @@ x11vnc \
     -localhost \
     -nopw \
     > /tmp/x11vnc.log 2>&1 &
-VNC_PID=$!
 
 sleep 1
 
-echo "Starting noVNC..."
+echo "starting noVNC..."
 
 websockify \
     --web=/usr/share/novnc \
     6080 \
     localhost:5900 \
     > /tmp/novnc.log 2>&1 &
-WEBSOCK_PID=$!
 
-echo "Starting Chrome for Testing..."
+echo "starting Chrome for Testing..."
 
 /opt/chrome-for-testing/chrome \
     --user-data-dir="$PROFILE" \
@@ -61,16 +57,11 @@ echo "Starting Chrome for Testing..."
     --no-default-browser-check \
     about:blank \
     > /tmp/chrome.log 2>&1 &
-CHROME_PID=$!
 
 sleep 2
 
-echo
 echo "========================================"
 echo " Browser sandbox started"
 echo " noVNC: http://127.0.0.1:6080/vnc.html"
 echo " CDP:   127.0.0.1:9222"
 echo "========================================"
-echo
-
-exec bash

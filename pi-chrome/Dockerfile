@@ -1,11 +1,11 @@
-# 基于 pi-base 镜像构建，仅叠加 Chrome for Testing 浏览器栈相关组件。
+# 基于 pi-base 镜像构建，仅叠加 Chrome for Testing 浏览器桌面栈。
 # 构建前需先构建基础镜像: docker build -t pi:latest pi-base/
 FROM pi:latest
 
 # 基础镜像末尾切换到了 node 用户，安装系统包需先切回 root
 USER root
 
-# Chrome for Testing 运行所需的共享库（不再依赖 Debian 的 chromium 包）
+# Chrome for Testing 运行所需的共享库（不使用 Debian 的 chromium 包）
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libnss3 \
     libnspr4 \
@@ -76,6 +76,12 @@ RUN set -eux; \
     rm -f /tmp/cft.json /tmp/cft.zip; \
     /opt/chrome-for-testing/chrome --version
 
+# 桌面栈作为启动钩子：由统一入口 /usr/local/bin/entrypoint.sh 执行。
+# 与 pi-base 共享同一个入口脚本，镜像之间只靠钩子区分能力。
+COPY start-desktop.sh /etc/pi/startup.d/20-desktop.sh
+
+RUN chmod +x /etc/pi/startup.d/20-desktop.sh
+
 USER node
 
 ENV DISPLAY=:99
@@ -84,10 +90,4 @@ RUN mkdir -p \
     /home/node/chrome-profile \
     /home/node/.vnc
 
-COPY --chown=node:node start.sh /usr/local/bin/start.sh
-
-RUN chmod +x /usr/local/bin/start.sh
-
 EXPOSE 6080
-
-CMD ["/usr/local/bin/start.sh"]

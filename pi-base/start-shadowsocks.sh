@@ -51,7 +51,7 @@ fi
 PXC_DIR="${HOME:-/home/node}/.proxychains"
 if mkdir -p "$PXC_DIR" 2>/dev/null; then
     cat > "$PXC_DIR/proxychains.conf" <<EOF
-# 由 start-shadowsocks.sh 自动生成：指向本地 shadowsocks SOCKS5 代理
+# 由 shadowsocks 启动钩子自动生成：指向本地 shadowsocks SOCKS5 代理
 strict_chain
 proxy_dns
 [ProxyList]

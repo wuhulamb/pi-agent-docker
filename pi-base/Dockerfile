@@ -46,7 +46,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # 默认 proxychains 配置：指向本地 shadowsocks 的 SOCKS5 代理
-# 运行时 start-shadowsocks.sh 会按实际端口生成 ~/.proxychains/proxychains.conf 覆盖它
+# 运行时 shadowsocks 钩子会按实际端口生成 ~/.proxychains/proxychains.conf 覆盖它
 RUN printf '%s\n' \
     '# 默认指向本地 shadowsocks SOCKS5 代理，可按需修改' \
     'strict_chain' \
@@ -55,18 +55,21 @@ RUN printf '%s\n' \
     'socks5 127.0.0.1 1080' \
     > /etc/proxychains4.conf
 
+# 统一入口 + 启动钩子目录。镜像自带能力（shadowsocks）也以钩子形式安装。
+RUN mkdir -p /etc/pi/startup.d
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY start-shadowsocks.sh /etc/pi/startup.d/10-shadowsocks.sh
+
+RUN chmod +x \
+    /usr/local/bin/entrypoint.sh \
+    /etc/pi/startup.d/10-shadowsocks.sh
+
 USER node
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ENV PATH="/home/node/.local/bin:${PATH}"
-
-COPY --chown=node:node start-shadowsocks.sh /usr/local/bin/start-shadowsocks.sh
-COPY --chown=node:node entrypoint.sh /usr/local/bin/entrypoint.sh
-
-RUN chmod +x \
-    /usr/local/bin/start-shadowsocks.sh \
-    /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["bash"]
