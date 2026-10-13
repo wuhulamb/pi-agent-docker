@@ -3,6 +3,9 @@ set -e
 
 export DISPLAY=:99
 
+echo "Starting shadowsocks..."
+/usr/local/bin/start-shadowsocks.sh || true
+
 PROFILE=/home/node/chrome-profile
 
 rm -f \

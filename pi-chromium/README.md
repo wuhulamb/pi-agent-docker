@@ -140,7 +140,11 @@ pi mcp list      # 连接并打印服务器状态
 
 ## 网络代理
 
-`shadowsocks-libev` 继承自基础镜像 `pi:latest`。若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内；文件缺失时跳过挂载。
+`shadowsocks-libev` 与 `proxychains4` 继承自基础镜像 `pi:latest`：
+
+- 若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内；文件缺失时跳过挂载。
+- `start.sh` 在容器启动时自动运行 `ss-local`，提供本地 SOCKS5 代理，并生成 `~/.proxychains/proxychains.conf`（指向实际监听端口）。
+- 让某条命令走代理：`proxychains4 <命令>`，例如 `proxychains4 curl https://example.com`。
 
 ## Git 配置
 

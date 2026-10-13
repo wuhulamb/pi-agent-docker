@@ -27,7 +27,17 @@ docker build -t pi:latest pi-base/
 
 ## 网络代理
 
-Dockerfile 内置 `shadowsocks-libev`，可配置网络代理。若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内；文件缺失时跳过挂载。
+镜像内置 `shadowsocks-libev` 与 `proxychains4`：
+
+- 若宿主机存在 `~/Documents/programs/shadowsocks/config.json`，启动时自动挂载到容器内 `/etc/shadowsocks-libev/config.json`；文件缺失时跳过挂载。
+- 容器启动时 `entrypoint.sh` 会自动运行 `ss-local`，在本地提供 SOCKS5 代理，并按配置里的 `local_address`/`local_port` 生成 proxychains 配置 `~/.proxychains/proxychains.conf`。
+- 让某条命令走代理：
+
+  ```bash
+  proxychains4 curl https://example.com
+  ```
+
+默认的 `/etc/proxychains4.conf` 指向 `socks5 127.0.0.1 1080`；运行时生成的 `~/.proxychains/proxychains.conf` 优先级更高，会按实际端口覆盖它。
 
 ## Git 配置
 
