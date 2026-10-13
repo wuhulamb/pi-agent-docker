@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     procps \
     xxd \
     file \
+    xclip \
     fd-find \
     ripgrep \
     fonts-liberation \
