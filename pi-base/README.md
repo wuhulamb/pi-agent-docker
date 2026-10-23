@@ -17,6 +17,12 @@
 docker build -t pi:latest pi-base/
 ```
 
+## uv 镜像
+
+镜像通过系统级 `/etc/uv/uv.toml` 将包索引设为南京大学镜像 `https://mirror.nju.edu.cn/pypi/web/simple`，Python 解释器下载设为南京大学 `python-build-standalone` 镜像 `https://mirror.nju.edu.cn/github-release/astral-sh/python-build-standalone/`。
+
+如需覆盖，设置 `UV_DEFAULT_INDEX` / `UV_PYTHON_INSTALL_MIRROR`，或构建时传入 `--build-arg UV_PYPI_INDEX=...` / `--build-arg UV_PYTHON_INSTALL_MIRROR=...`。
+
 ## 使用方法
 
 在宿主机执行启动脚本：

@@ -4,7 +4,7 @@
 
 | 镜像 | 目录 | 说明 |
 | --- | --- | --- |
-| `pi:latest` | [pi-base/](pi-base/README.md) | 基础镜像：内置常用开发/调试工具、中文字体、pi-coding-agent、shadowsocks 与 proxychains |
+| `pi:latest` | [pi-base/](pi-base/README.md) | 基础镜像：内置常用开发/调试工具、中文字体、pi-coding-agent、shadowsocks、proxychains 与 uv 国内镜像 |
 | `pi-chrome:latest` | [pi-chrome/](pi-chrome/README.md) | 浏览器镜像：在基础镜像上增加 Chrome for Testing、Xvfb、noVNC，支持浏览器自动化 |
 
 ## 快速开始

@@ -66,6 +66,18 @@ RUN chmod +x \
     /usr/local/bin/entrypoint.sh \
     /etc/pi/startup.d/10-shadowsocks.sh
 
+# uv 使用南京大学镜像：PyPI 包索引 + Python 解释器下载。
+# 系统级配置 /etc/uv/uv.toml 对所有用户生效，可用环境变量或命令行覆盖。
+ARG UV_PYPI_INDEX=https://mirror.nju.edu.cn/pypi/web/simple
+ARG UV_PYTHON_INSTALL_MIRROR=https://mirror.nju.edu.cn/github-release/astral-sh/python-build-standalone/
+RUN mkdir -p /etc/uv && printf '%s\n' \
+    "python-install-mirror = \"${UV_PYTHON_INSTALL_MIRROR}\"" \
+    '' \
+    '[[index]]' \
+    "url = \"${UV_PYPI_INDEX}\"" \
+    'default = true' \
+    > /etc/uv/uv.toml
+
 USER node
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
